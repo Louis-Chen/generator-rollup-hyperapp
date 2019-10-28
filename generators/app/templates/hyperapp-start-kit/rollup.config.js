@@ -1,43 +1,35 @@
 import babel from 'rollup-plugin-babel'
+import builtins from 'rollup-plugin-node-builtins'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { uglify } from 'rollup-plugin-uglify'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import postcss from 'rollup-plugin-postcss'
-const prod = !process.env.ROLLUP_WATCH
-const dev = !!process.env.ROLLUP_WATCH
 
 export default {
 	input: 'src/app.js',
 	output: {
-    name:'bundle.js',
+		name: 'bundle.js',
 		file: 'public/bundle.js',
-		sourcemap: dev ? 'inline' : false,
-		format: 'iife'
+		sourcemap: 'inline',
+		format: 'umd'
 	},
 	plugins: [
-		resolve({ jsnext: true, browser: true }),
+		resolve(),
 		commonjs({
-			exclude: 'src/**'
-    }),
-    postcss({
+			exclude: 'src/**',
+			include: ['node_modules/**']
+		}),
+		postcss({
 			plugins: [],
 			minimize: true,
 			sourceMap: 'inline'
 		}),
 		babel({
 			exclude: 'node_modules/**',
-			presets: [
-				[
-					'@babel/preset-env',
-					{
-						targets: {
-							node: 'current'
-						}
-					}
-				]
-			],
+			extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+			presets: [['@babel/preset-env']],
 			plugins: [
 				[
 					'@babel/plugin-transform-react-jsx',
@@ -50,14 +42,14 @@ export default {
 				]
 			]
 		}),
-		prod && uglify(),
-		dev && livereload(),
-		dev &&
-			serve({
-				contentBase: ['public'],
-				historyApiFallback: true,
-				port: 3000,
-				open:true
-			})
+		builtins(),
+		uglify(),
+		livereload(),
+		serve({
+			contentBase: ['public'],
+			historyApiFallback: true,
+			port: 3000,
+			open: true
+		})
 	]
 }

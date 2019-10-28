@@ -18,4 +18,4 @@ const view = (state, actions) => {
 		</div>
 	)
 }
-export const main = app(state, actions, view, document.getElementById('root'))
+export const main = app(state, actions, view, document.body)
