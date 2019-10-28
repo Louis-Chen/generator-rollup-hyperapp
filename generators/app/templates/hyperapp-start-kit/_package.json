@@ -1,6 +1,5 @@
 {
-	"name": "hyperapp-start-kit",
-	"version": "0.1.0",
+	"name": "<%= name %>",
 	"description": "",
 	"main": "src/app.js",
 	"scripts": {
