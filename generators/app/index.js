@@ -7,7 +7,7 @@ const mkdirp = require('mkdirp')
 module.exports = class extends Generator {
 	constructor(args, opts) {
 		super(args, opts)
-		this.tmpDir = 'hyper-start-kit'
+		this.tmpDir = 'hyperapp-start-kit'
 		this.name = ''
 	}
 
