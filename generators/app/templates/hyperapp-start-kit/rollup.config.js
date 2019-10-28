@@ -6,6 +6,7 @@ import { uglify } from 'rollup-plugin-uglify'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import postcss from 'rollup-plugin-postcss'
+import url from 'postcss-url'
 
 export default {
 	input: 'src/app.js',
@@ -22,7 +23,11 @@ export default {
 			include: ['node_modules/**']
 		}),
 		postcss({
-			plugins: [],
+			plugins: [
+				url({
+					url: 'inline'
+				})
+			],
 			minimize: true,
 			sourceMap: 'inline'
 		}),
