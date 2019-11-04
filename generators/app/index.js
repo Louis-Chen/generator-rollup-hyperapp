@@ -33,7 +33,7 @@ module.exports = class extends Generator {
 
 	writing() {
 		this.fs.copy(this.templatePath(this.tmpDir + '/'), this.destinationPath(this.destinationRoot(this.name)), {
-			globOptions: { dot: true }
+			globOptions: { dot: true, ignore: ['**/node_modules', '**/package-lock.json'] }
 		})
 
 		this.fs.copyTpl(this.templatePath(this.tmpDir + '/_package.json'), this.destinationPath('package.json'), {
